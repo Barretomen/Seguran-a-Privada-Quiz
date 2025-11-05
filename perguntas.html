@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz de Segurança Privada</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f4f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        width: 90%;
+        max-width: 800px;
+        text-align: center;
+        overflow-y: auto;
+        max-height: 90vh;
+    }
+
+    h1 {
+        color: #003366;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        color: #003366;
+        margin-top: 20px;
+    }
+
+    button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .module-btn {
+        display: block;
+        width: 100%;
+        text-align: left;
+        background-color: #e9f2ff;
+        color: #003366;
+        border: 2px solid #003366;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        font-size: 1em;
+    }
+
+    .module-btn:hover {
+        background-color: #d8e6ff;
+    }
+
+    .question {
+        font-size: 1.2em;
+        margin: 20px 0;
+        font-weight: bold;
+    }
+
+    #next-btn {
+        display: none;
+        background-color: #28a745;
+    }
+
+    #next-btn:hover {
+        background-color: #1f7a33;
+    }
+
+    .result {
+        font-size: 1.3em;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .summary {
+        text-align: left;
+        margin-top: 20px;
+    }
+
+    .summary-item {
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0;
+    }
+
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+
+    .back-btn {
+        background-color: #6c757d;
+    }
+
+    .back-btn:hover {
+        background-color: #555;
+    }
+</style>
+</head>
+<body>
+
+<div class="container" id="main-container">
+    <div id="menu">
+        <h1>Quiz de Formação – Segurança Privada</h1>
+        <h2>Selecione a Unidade</h2>
+
+        <button class="module-btn" onclick="startModule('BAS01')">
+            <strong>Unidade:</strong> BAS01 – Diversidade, Direitos Fundamentais e Direitos do Homem<br>
+            <strong>Diploma:</strong> Constituição da República Portuguesa<br>
+            <strong>Dificuldade:</strong> 3 - Complexo
+        </button>
+
+        <button class="module-btn" onclick="startModule('BAS02')">
+            <strong>Unidade:</strong> BAS02 – Crime, procedimento penal e meios de prova<br>
+            <strong>Diploma:</strong> Código Penal e Código de Processo Penal<br>
+            <strong>Dificuldade:</strong> 3 - Complexo
+        </button>
+
+        <button class="module-btn" onclick="startModule('BAS03A')">
+            <strong>Unidade:</strong> BAS03 – Regime jurídico da atividade de segurança privada<br>
+            <strong>Diploma:</strong> Lei n.º 34/2013 (alterada pela Lei n.º 46/2019)<br>
+            <strong>Dificuldade:</strong> 3 - Complexo
+        </button>
+
+        <button class="module-btn" onclick="startModule('BAS03B')">
+            <strong>Unidade:</strong> BAS03 – Regime jurídico da atividade de segurança privada<br>
+            <strong>Diploma:</strong> Portaria n.º 273/2013, de 20 de agosto<br>
+            <strong>Dificuldade:</strong> 3 - Complexo
+        </button>
+
+        <button class="module-btn" onclick="startModule('BAS03C')">
+            <strong>Unidade:</strong> BAS03 – Regime jurídico da atividade de segurança privada<br>
+            <strong>Diploma:</strong> Portaria n.º 292/2013, de 26 de setembro<br>
+            <strong>Dificuldade:</strong> 3 - Complexo
+        </button>
+    </div>
+
+    <div id="quiz" style="display:none;">
+        <h1 id="module-title"></h1>
+        <div class="question" id="question"></div>
+        <div>
+            <button id="true-btn">Verdadeiro</button>
+            <button id="false-btn">Falso</button>
+        </div>
+        <button id="next-btn">Próxima Pergunta</button>
+        <div class="result" id="result"></div>
+        <div id="summary" class="summary"></div>
+        <button class="back-btn" id="back-btn" style="display:none;">⬅ Voltar ao Menu</button>
+    </div>
+</div>
+
+<script>
+const modules = {
+    BAS01: {
+        title: "BAS01 – Diversidade, Direitos Fundamentais e Direitos do Homem",
+        questions: [
+           { text: "Os Direitos, Liberdades e Garantias, encontram-se previstos e regulados na Constituição da República Portuguesa.", correct: true },
+{ text: "Os Direitos, Liberdades e Garantias, encontram-se previstos e regulados no Código de Processo Penal.", correct: false },
+{ text: "Os Direitos, Liberdades e garantias, encontram-se previstos e regulados no Código Penal e Código Civil.", correct: false },
+{ text: "Os Direitos, Liberdades e garantias, encontram-se previstos e regulados no Código Penal.", correct: false },
+{ text: "De acordo com a Constituição da República, são tarefas fundamentais do Estado promover a igualdade entre homens e mulheres.", correct: true },
+{ text: "De acordo com a Constituição da República, são tarefas fundamentais do Estado garantir os direitos e liberdades fundamentais e o respeito pelos princípios do Estado de direito democrático.", correct: true },
+{ text: "De acordo com a Constituição da República, são tarefas fundamentais do Estado promover a desigualdade entre homens e mulheres, com especial atenção nos ordenados.", correct: false },
+{ text: "De acordo com a Constituição da República, são tarefas fundamentais do Estado garantir os direitos do Estado, sem respeito pelos princípios do cidadão e dos seus direitos democráticos.", correct: false },
+{ text: "Os órgãos de soberania não podem, conjunta ou separadamente, suspender o exercício dos direitos, liberdades e garantias, salvo em estado de sítio, declarado na forma prevista na Constituição.", correct: true },
+{ text: "Os órgãos de soberania não podem, conjunta ou separadamente, suspender o exercício dos direitos, liberdades e garantias, salvo em estado de emergência, declarado na forma prevista na Constituição.", correct: true },
+{ text: "Os órgãos de soberania podem, conjunta ou separadamente, suspender o exercício dos direitos, liberdades e garantias a qualquer momento.", correct: false },
+{ text: "Todos têm o direito de resistir a qualquer ordem que ofenda os seus direitos, liberdades e garantias e de repelir pela força qualquer agressão, quando não seja possível recorrer à autoridade pública.", correct: true },
+{ text: "Todos têm o direito de resistir a qualquer ordem que ofenda os seus direitos, liberdades e garantias e de repelir pela força qualquer agressão, mesmo na presença da autoridade pública.", correct: false },
+{ text: "De acordo com a Constituição da República Portuguesa, a vida humana é inviolável.", correct: true },
+{ text: "De acordo com a Constituição da República Portuguesa, a vida humana é violável e existe pena de morte de acordo com a Constituição.", correct: false },
+{ text: "De acordo com a Constituição da República Portuguesa, em caso algum haverá pena de morte.", correct: true },
+
+        ]
+    },
+    BAS02: {
+        title: "BAS02 – Crime, procedimento penal e meios de prova",
+        questions: [
+  { text: "Só pode ser punido criminalmente o facto descrito e declarado passível de pena por lei anterior ao momento da sua prática.", correct: true },
+  { text: "Só pode ser punido criminalmente o facto descrito e declarado passível de pena por lei posterior ao momento da sua prática.", correct: false },
+  { text: "Quando as disposições penais vigentes no momento da prática do facto punível forem diferentes das estabelecidas em leis posteriores, é sempre aplicado o regime que concretamente se mostrar mais favorável ao agente.", correct: true },
+  { text: "Quando as disposições penais vigentes no momento da prática do facto punível forem diferentes das estabelecidas em leis posteriores, é sempre aplicado o regime que se encontrar em vigência no momento da prática do facto.", correct: false },
+  { text: "Salvo tratado ou convenção internacional em contrário, a lei penal portuguesa é aplicável a factos praticados em território português, seja qual for a nacionalidade do agente.", correct: true },
+  { text: "Salvo tratado ou convenção internacional em contrário, a lei penal portuguesa é aplicável a bordo de navios ou aeronaves portuguesas.", correct: true },
+  { text: "Salvo tratado ou convenção internacional em contrário, a lei penal portuguesa é aplicável em território estrangeiro.", correct: false },
+  { text: "Salvo tratado ou convenção internacional em contrário, a lei penal portuguesa é aplicável apenas a arguidos de nacionalidade estrangeira.", correct: false },
+  { text: "Qualquer agente pode ser considerado inimputável em razão da idade inferior a 16 anos.", correct: true },
+  { text: "Qualquer agente pode ser considerado inimputável em razão de anomalia psíquica.", correct: true },
+  { text: "Qualquer agente pode ser considerado inimputável em razão da idade inferior a 18 anos.", correct: false },
+  { text: "Qualquer agente pode ser considerado inimputável em razão de anomalia física.", correct: false },
+  { text: "De acordo com o Código Penal é punível como autor quem tomar parte direta na execução de um crime, por acordo ou juntamente com outro(s).", correct: true },
+  { text: "De acordo com o Código Penal é punível como autor quem dolosamente determinar outra pessoa à prática do facto criminal, desde que haja execução.", correct: true },
+  { text: "De acordo com o Código Penal constitui legítima defesa o fato praticado como meio necessário para repelir a agressão atual e ilícita de interesses juridicamente protegidos do agente ou de terceiro.", correct: true },
+  { text: "De acordo com o Código Penal constitui legítima defesa o fato praticado como meio para contrapor a agressão atual e lícita de interesses juridicamente desprotegidos do agente ou de terceiro.", correct: false },
+  { text: "Salvo tratado ou convenção internacional em contrário, a lei penal portuguesa é aplicável apenas a arguidos de nacionalidade estrangeira.", correct: false },
+  { text: "Qualquer agente pode ser considerado inimputável em razão da idade inferior a 16 anos.", correct: true },
+  { text: "Qualquer agente pode ser considerado inimputável em razão de anomalia psíquica.", correct: true },
+  { text: "Qualquer agente pode ser considerado inimputável em razão da idade inferior a 18 anos.", correct: false },
+  { text: "Qualquer agente pode ser considerado inimputável em razão de anomalia física.", correct: false },
+  { text: "Verdadeira ou começo de execução.", correct: true },
+  { text: "De acordo com o Código Penal é punível como autor quem tomar parte direta na execução de um crime, por acordo ou juntamente com outro(s).", correct: true },
+  { text: "De acordo com o Código Penal é punível como autor quem dolosamente determinar outra pessoa à prática do facto criminal, desde que haja execução.", correct: true },
+  { text: "De acordo com o Código Penal constitui legítima defesa o fato praticado como meio necessário para repelir a agressão atual e ilícita de interesses juridicamente protegidos do agente ou de terceiro.", correct: true },
+  { text: "De acordo com o Código Penal constitui legítima defesa o fato praticado como meio para contrapor a agressão atual e lícita de interesses juridicamente desprotegidos do agente ou de terceiro.", correct: false },
+  { text: "De acordo com o Código Penal constitui legítima defesa o fato praticado como meio obrigatório para repelir a companhia atual e lícita de interesses juridicamente protegidos do agente ou da empresa.", correct: false },
+  { text: "De acordo com o Código Penal a duração da pena de prisão é no limite máximo de 25 anos, nos casos previstos na Lei.", correct: true },
+  { text: "De acordo com o Código Penal a duração da pena de prisão tem limite mínimo de 25 anos.", correct: false },
+  { text: "De acordo com o Código Penal a duração da pena de prisão tem a duração mínima de 15 dias e a máxima de 20 anos.", correct: false },
+  { text: "De acordo com o Código Penal, entre outros, são crimes contra a propriedade o furto e o furto qualificado.", correct: true },
+  { text: "De acordo com o Código Penal, entre outros, são crimes contra a propriedade o abuso de confiança e o roubo.", correct: true },
+  { text: "De acordo com o Código Penal, entre outros, são crimes contra a propriedade o abuso de confiança e o furto de uso de veículo.", correct: true },
+  { text: "De acordo com o Código Penal o furto, ao contrário do roubo, pressupõe a não existência de violência ou constrangimento.", correct: true },
+  { text: "De acordo com o Código Penal o furto, ao contrário do roubo, pressupõe a inexistência de violência.", correct: true },
+  { text: "De acordo com o Código Penal o roubo, ao contrário do furto, pressupõe a existência de violência ou constrangimento.", correct: true },
+  { text: "De acordo com o Código Penal o roubo, ao contrário do furto, pressupõe a não existência de violência ou constrangimento.", correct: false },
+  { text: "De acordo com o Código Penal o crime de furto está tipificado como 'quem, com ilegítima intenção de apropriação para si ou para outra pessoa, subtrair coisa móvel alheia.'", correct: true },
+  { text: "De acordo com o Código Penal o crime de furto está tipificado como 'quem, com ilegítima intenção de apropriação para si ou para outra pessoa, subtrair, coisa móvel alheia, com violência contra uma pessoa'.", correct: false },
+  { text: "De acordo com o Código Penal o crime de roubo está tipificado como 'quem, com ilegítima intenção de apropriação para si ou para outra pessoa, subtrair, coisa móvel alheia, através de ameaça com perigo iminente para a vida ou para a integridade física'.", correct: true },
+  { text: "De acordo com o Código Penal o crime de roubo está tipificado com 'quem, com ilegítima intenção de apropriação para si ou para outra pessoa, subtrair, coisa móvel alheia, por meio de violência contra uma pessoa'.", correct: true },
+  { text: "De acordo com o Código Processo Penal considera-se Autoridade Judiciária: o Juiz, o Juiz de Instrução e a Polícia de Segurança pública, cada um relativamente aos atos processuais que cabem na sua competência.", correct: false },
+  { text: "De acordo com o Código Processo Penal considera-se Autoridade Judiciária: o Juiz, o Juiz de instrução e o Ministério Público, cada um relativamente aos atos processuais que cabem na sua competência.", correct: true },
+  { text: "De acordo com o Código Processo Penal considera-se Autoridade Judiciária: o Oficial de justiça, o Vigilante e o Solicitador, cada um relativamente aos atos processuais que cabem na sua competência.", correct: false },
+  { text: "De acordo com o Código Penal o roubo, ao contrário do furto, pressupõe a não existência de violência ou constrangimento.", correct: false },
+  { text: "De acordo com o Código Penal o crime de furto está tipificado como 'quem, com ilegítima intenção de apropriação para si ou para outra pessoa, subtrair coisa móvel alheia.'", correct: true },
+  { text: "De acordo com o Código Penal o crime de furto está tipificado como 'quem, com ilegítima intenção de apropriação para si ou para outra pessoa, subtrair, coisa móvel alheia, com violência contra uma pessoa'.", correct: false },
+  { text: "De acordo com o Código Penal o crime de roubo está tipificado como 'quem, com ilegítima intenção de apropriação para si ou para outra pessoa, subtrair, coisa móvel alheia, através de ameaça com perigo iminente para a vida ou para a integridade física'.", correct: true },   { text: "De acordo com o Código Penal o crime de roubo está tipificado com 'quem, com ilegítima intenção de apropriação para si ou para outra pessoa, subtrair, coisa móvel alheia, por meio de violência contra uma pessoa'.", correct: true },
+  { text: "De acordo com o Código Processo Penal considera-se Autoridade Judiciária: o Juiz, o Juiz de Instrução e a Polícia de Segurança pública, cada um relativamente aos atos processuais que cabem na sua competência.", correct: false },
+  { text: "De acordo com o Código Processo Penal considera-se Autoridade Judiciária: o Juiz, o Juiz de instrução e o Ministério Público, cada um relativamente aos atos processuais que cabem na sua competência.", correct: true },
+  { text: "De acordo com o Código Processo Penal considera-se Autoridade Judiciária: o Oficial justiça, o Vigilante e o Solicitador, cada um relativamente aos atos processuais que cabem na sua competência.", correct: false }
+]
+
+
+    },
+    BAS03A: {
+        title: "BAS03 – Lei n.º 34/2013 (alterada pela Lei n.º 46/2019)",
+        questions: [
+    { text: "A Lei de Segurança Privada estabelece o regime do exercício da atividade de segurança privada, da organização de serviços de autoproteção e as medidas a adotar, por entidades públicas ou privadas, com vista a prevenir a prática de crimes.", correct: true },
+    { text: "A Lei de Segurança Privada estabelece o regime do exercício da atividade de segurança privada e as medidas a adotar por entidades privadas e judiciárias com vista a combater a prática de crimes.", correct: false },
+    { text: "A atividade de segurança privada tem função complementar à atividade das forças e serviços de segurança pública do Estado.", correct: true },
+    { text: "Para efeitos da Lei de Segurança Privada, a proteção de pessoas e bens e a prevenção da prática de crimes, pode ser exercida por entidade privada, devidamente autorizada, que exerça a atividade de prestação de serviços de segurança privada a terceiros.", correct: true },
+    { text: "Entende-se por fiscal de exploração de transportes públicos o profissional de segurança privada, devidamente habilitado e ajuramentado, que verifica a posse e validade dos títulos de transporte, podendo identificar o utente e proceder à respetiva autuação.", correct: true },
+    { text: "Entende-se por fiscal de exploração de transportes públicos o profissional de segurança privada, devidamente habilitado, que verifica a posse e validade dos títulos de transporte, não podendo identificar o utente e proceder à respetiva autuação.", correct: false },
+    { text: "A Lei de Segurança Privada estabelece o regime do exercício da atividade de segurança privada, da organização de serviços de autoproteção e as medidas a adotar, por entidades públicas ou privadas, com vista a prevenir a prática de crimes.", correct: true },
+    { text: "A Lei de Segurança Privada estabelece o regime do exercício da atividade de segurança privada e as medidas a adotar por entidades privadas e judiciárias com vista a combater a prática de crimes.", correct: false },
+    { text: "A atividade de segurança privada tem função complementar à atividade das forças e serviços de segurança pública do Estado.", correct: true },
+    { text: "Para efeitos da Lei de Segurança Privada, a proteção de pessoas e bens e a prevenção da prática de crimes, pode ser exercida por entidade privada, devidamente autorizada, que exerça a atividade de prestação de serviços de segurança privada a terceiros.", correct: true },
+    { text: "Entende-se por fiscal de exploração de transportes públicos o profissional de segurança privada, devidamente habilitado e ajuramentado, que verifica a posse e validade dos títulos de transporte, podendo identificar o utente e proceder à respetiva autuação.", correct: true },
+    { text: "Entende-se por fiscal de exploração de transportes públicos o profissional de segurança privada, devidamente habilitado, que verifica a posse e validade dos títulos de transporte, não podendo identificar o utente e proceder à respetiva autuação.", correct: false },        
+    { text: "A Lei de Segurança Privada estabelece o regime do exercício da atividade de segurança privada, da organização de serviços de autoproteção e as medidas a adotar, por entidades públicas ou privadas, com vista a prevenir a prática de crimes.", correct: true },
+    { text: "A Lei de Segurança Privada estabelece o regime do exercício da atividade de segurança privada e as medidas a adotar por entidades privadas e judiciárias com vista a combater a prática de crimes.", correct: false },
+    { text: "A atividade de segurança privada tem função complementar à atividade das forças e serviços de segurança pública do Estado.", correct: true },
+    { text: "Para efeitos da Lei de Segurança Privada, a proteção de pessoas e bens e a prevenção da prática de crimes, pode ser exercida por entidade privada, devidamente autorizada, que exerça a atividade de prestação de serviços de segurança privada a terceiros.", correct: true },
+    { text: "Entende-se por fiscal de exploração de transportes públicos o profissional de segurança privada, devidamente habilitado e ajuramentado, que verifica a posse e validade dos títulos de transporte, podendo identificar o utente e proceder à respetiva autuação.", correct: true },
+    { text: "Entende-se por fiscal de exploração de transportes públicos o profissional de segurança privada, devidamente habilitado, que verifica a posse e validade dos títulos de transporte, não podendo identificar o utente e proceder à respetiva autuação.", correct: false },
+    { text: "Entende-se por monitorização de alarmes todos os atos e procedimentos relacionados com a receção de sinais de alarme, bem como a resposta e reposição de alarmes.", correct: true },
+    { text: "Entende-se por pessoal de vigilância quem, devidamente autorizado pela Polícia de Segurança Pública, exerça as funções previstas na Lei de Segurança Privada, e se encontre vinculado por contrato coletivo de trabalho.", correct: false },
+    { text: "Entende-se por pessoal de vigilância quem, devidamente habilitado e autorizado a exercer as funções previstas na Lei de Segurança Privada, se encontre vinculado por contrato de trabalho a entidade titular de alvará ou licença.", correct: true },
+    { text: "Entende-se por proteção pessoal a atividade de segurança privada de acompanhamento pessoal, para sua defesa e proteção.", correct: true },
+    { text: "Entende-se por proteção pessoal a atividade de segurança privada de acompanhamento de pessoas e bens, efetuada por vigilante, para defesa e proteção dos clientes.", correct: false },
+    { text: "Entende-se por proteção pessoal a atividade de segurança privada de acompanhamento de pessoas e bens, efetuada por vigilante, para defesa e proteção.", correct: true },
+    { text: "As empresas de segurança privada estão autorizadas a prestar o serviço de vigilância de bens móveis e imóveis e o controlo de entrada, presença e saída de pessoas nos locais onde prestem serviços.", correct: true },
+    { text: "As empresas de segurança privada estão autorizadas a prestar o serviço de proteção pessoal, sem prejuízo das competências exclusivas atribuídas às forças de segurança.", correct: true }
+]
+    },
+    BAS03B: {
+        title: "BAS03 – Portaria n.º 273/2013, de 20 de agosto",
+        questions: [
+            // 🔹 Coloque aqui as perguntas da BAS03 (Portaria 273)
+        ]
+    },
+    BAS03C: {
+        title: "BAS03 – Portaria n.º 292/2013, de 26 de setembro",
+        questions: [
+            // 🔹 Coloque aqui as perguntas da BAS03 (Portaria 292)
+        ]
+    }
+};
+
+let currentModule = null;
+let currentQuestion = 0;
+let score = 0;
+let answers = [];
+
+const menu = document.getElementById("menu");
+const quiz = document.getElementById("quiz");
+const questionEl = document.getElementById("question");
+const trueBtn = document.getElementById("true-btn");
+const falseBtn = document.getElementById("false-btn");
+const nextBtn = document.getElementById("next-btn");
+const resultEl = document.getElementById("result");
+const summaryEl = document.getElementById("summary");
+const moduleTitleEl = document.getElementById("module-title");
+const backBtn = document.getElementById("back-btn");
+
+function startModule(id) {
+    currentModule = modules[id];
+    currentQuestion = 0;
+    score = 0;
+    answers = [];
+    menu.style.display = "none";
+    quiz.style.display = "block";
+    backBtn.style.display = "none";
+    moduleTitleEl.textContent = currentModule.title;
+    showQuestion();
+}
+
+function showQuestion() {
+    const q = currentModule.questions[currentQuestion];
+    questionEl.textContent = `${currentQuestion + 1}. ${q.text}`;
+    resultEl.textContent = "";
+    nextBtn.style.display = "none";
+    summaryEl.innerHTML = "";
+}
+
+function checkAnswer(answer) {
+    const correct = currentModule.questions[currentQuestion].correct;
+    answers.push({ question: currentModule.questions[currentQuestion].text, userAnswer: answer, correctAnswer: correct });
+
+    if (answer === correct) {
+        score++;
+        resultEl.textContent = "✅ Correto!";
+        resultEl.style.color = "green";
+    } else {
+        resultEl.textContent = "❌ Errado!";
+        resultEl.style.color = "red";
+    }
+    trueBtn.disabled = true;
+    falseBtn.disabled = true;
+    nextBtn.style.display = "inline-block";
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion < currentModule.questions.length) {
+        showQuestion();
+        trueBtn.disabled = false;
+        falseBtn.disabled = false;
+    } else {
+        showFinalScore();
+    }
+}
+
+function showFinalScore() {
+    questionEl.textContent = "🎯 Quiz finalizado!";
+    resultEl.innerHTML = `Você acertou <strong>${score}</strong> de <strong>${currentModule.questions.length}</strong> perguntas.`;
+    trueBtn.style.display = "none";
+    falseBtn.style.display = "none";
+    nextBtn.textContent = "Reiniciar Quiz";
+    nextBtn.onclick = restartQuiz;
+    nextBtn.style.display = "inline-block";
+    backBtn.style.display = "inline-block";
+    showSummary();
+}
+
+function showSummary() {
+    let html = "<h2>Resumo das Respostas</h2>";
+    answers.forEach((item, i) => {
+        const isCorrect = item.userAnswer === item.correctAnswer;
+        html += `
+            <div class="summary-item">
+                <strong>${i + 1}. ${item.question}</strong><br>
+                Sua resposta: <span class="${isCorrect ? 'correct' : 'incorrect'}">
+                    ${item.userAnswer ? 'Verdadeiro' : 'Falso'}
+                </span><br>
+                Resposta correta: <span class="correct">
+                    ${item.correctAnswer ? 'Verdadeiro' : 'Falso'}
+                </span>
+            </div>
+        `;
+    });
+    summaryEl.innerHTML = html;
+}
+
+function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    answers = [];
+    summaryEl.innerHTML = "";
+    trueBtn.style.display = "inline-block";
+    falseBtn.style.display = "inline-block";
+    nextBtn.textContent = "Próxima Pergunta";
+    nextBtn.onclick = nextQuestion;
+    trueBtn.disabled = false;
+    falseBtn.disabled = false;
+    backBtn.style.display = "none";
+    showQuestion();
+}
+
+trueBtn.addEventListener("click", () => checkAnswer(true));
+falseBtn.addEventListener("click", () => checkAnswer(false));
+nextBtn.onclick = nextQuestion;
+backBtn.onclick = () => {
+    quiz.style.display = "none";
+    menu.style.display = "block";
+    nextBtn.textContent = "Próxima Pergunta";
+    nextBtn.onclick = nextQuestion;
+    trueBtn.style.display = "inline-block";
+    falseBtn.style.display = "inline-block";
+};
+</script>
+
+</body>
+</html>
