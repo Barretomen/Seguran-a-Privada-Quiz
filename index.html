@@ -5,9 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quiz de Segurança Privada</title>
 <style>
+    /* Fade-in animation */
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.8s forwards;
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+
     body {
         font-family: Arial, sans-serif;
-        background: #f0f4f8;
+        background: #000;
+        color: #f5f5f5;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -15,26 +28,36 @@
         margin: 0;
     }
 
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #111;
+        color: #00bfff;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 1em;
+        font-weight: bold;
+        letter-spacing: 1px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        z-index: 1000;
+    }
+
     .container {
-        background: #fff;
+        background: #1a1a1a;
         padding: 30px;
         border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        box-shadow: 0 0 20px rgba(255,255,255,0.1);
         width: 90%;
         max-width: 800px;
         text-align: center;
         overflow-y: auto;
-        max-height: 90vh;
+        max-height: 80vh;
+        margin-top: 60px;
     }
 
-    h1 {
-        color: #003366;
-        margin-bottom: 10px;
-    }
-
-    h2 {
-        color: #003366;
-        margin-top: 20px;
+    h1, h2 {
+        color: #00bfff;
     }
 
     button {
@@ -57,9 +80,9 @@
         display: block;
         width: 100%;
         text-align: left;
-        background-color: #e9f2ff;
-        color: #003366;
-        border: 2px solid #003366;
+        background-color: #111;
+        color: #00bfff;
+        border: 2px solid #00bfff;
         border-radius: 8px;
         padding: 15px;
         margin-bottom: 10px;
@@ -68,14 +91,19 @@
     }
 
     .module-btn:hover {
-        background-color: #d8e6ff;
+        background-color: #222;
     }
 
-    .question {
-        font-size: 1.2em;
-        margin: 20px 0;
-        font-weight: bold;
+    .question.fade-in {
+    opacity: 0;
+    animation: questionFadeIn 0.5s forwards;
+}
+
+@keyframes questionFadeIn {
+    to {
+        opacity: 1;
     }
+}
 
     #next-btn {
         display: none;
@@ -98,12 +126,12 @@
     }
 
     .summary-item {
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid #555;
         padding: 10px 0;
     }
 
-    .correct { color: green; font-weight: bold; }
-    .incorrect { color: red; font-weight: bold; }
+    .correct { color: #28a745; font-weight: bold; }
+    .incorrect { color: #ff4c4c; font-weight: bold; }
 
     .back-btn {
         background-color: #6c757d;
@@ -116,8 +144,10 @@
 </head>
 <body>
 
+<header>developed by João Mendes</header>
+
 <div class="container" id="main-container">
-    <div id="menu">
+    <div id="menu" class="fade-in">
         <h1>Quiz de Formação – Segurança Privada</h1>
         <h2>Selecione a Unidade</h2>
 
@@ -366,6 +396,11 @@ function showQuestion() {
     resultEl.textContent = "";
     nextBtn.style.display = "none";
     summaryEl.innerHTML = "";
+
+    // Adiciona fade-in na pergunta
+    questionEl.classList.remove("fade-in");
+    void questionEl.offsetWidth; // força reflow
+    questionEl.classList.add("fade-in");
 }
 
 function checkAnswer(answer) {
