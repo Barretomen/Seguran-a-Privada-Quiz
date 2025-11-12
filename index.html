@@ -282,13 +282,52 @@ const modules = {
     BAS03B: {
         title: "BAS03 – Portaria n.º 273/2013, de 20 de agosto",
         questions: [
-            // 🔹 Coloque aqui as perguntas da BAS03 (Portaria 273)
+            { text: "A Portaria 273/2013, de 20 de agosto, regula e define a prestação dos serviços de segurança privada e as caraterísticas das viaturas utilizadas no exercício da atividade de segurança privada.", correct: true },
+{ text: "A Portaria 273/2013, de 20 de agosto, regula e define as caraterísticas da sobreveste de identificação do pessoal de vigilância, quando exerça funções de assistente de recinto desportivo e assistente de recinto de espetáculos.", correct: true },
+{ text: "A Portaria 273/2013, de 20 de agosto, regula e define as caraterísticas da sobreveste de identificação do pessoal de vigilância, quando exerça funções de vigilante de recinto desportivo e vigilante de recinto de espetáculos.", correct: false },
+{ text: "A Portaria 273/2013, de 20 de agosto, regula e define as condições de utilização de canídeos.", correct: true },
+{ text: "A Portaria 273/2013, de 20 de agosto, regula e define as condições do porte de arma.", correct: true },
+{ text: "A Portaria 273/2013, de 20 de agosto, regula e define as condições do abate de canídeos.", correct: false },
+{ text: "A Portaria 273/2013, de 20 de agosto, regula e define as condições de pessoas.", correct: false },
+{ text: "De acordo com a Portaria 273/2013, de 20 de agosto, entende-se por área de segurança o local ou ponto de entrega e recolha de numerário localizado no interior de um edifício e protegido contra o acesso autorizado por equipamentos eletrónicos (sistemas anti-intrusão) e por medidas de restrição de permanência de pessoas.", correct: false },
+{ text: "De acordo com a Portaria 273/2013, de 20 de agosto, entende-se por área de segurança o local ou ponto de entrega e recolha de numerário localizado no interior de um edifício e protegido contra o acesso não autorizado por equipamentos eletrónicos (sistemas anti-intrusão) e por medidas de restrição de acesso de pessoas.", correct: true },
+{ text: "De acordo com a Portaria 273/2013, de 20 de agosto, entende-se por «Neutralizar uma nota de banco» é a ação de verificar a validade da nota.", correct: false },
+{ text: "De acordo com a Portaria 273/2013, de 20 de agosto, entende-se por «Neutralizar uma nota de banco» é a ação de verificar a validade e numeração da nota através de coloração.", correct: false },
+{ text: "De acordo com a Portaria 273/2013, de 20 de agosto, entende-se por «Neutralizar uma nota de banco» o meio indicado no anexo II do Regulamento que para este efeito é adotado como documento de referência.", correct: true },
+{ text: "De acordo com a Portaria 273/2013, de 20 de agosto, entende-se por uniforme o vestuário e calçado padronizado que caracteriza o pessoal de vigilância vinculado a uma entidade de segurança privada.", correct: true },
+{ text: "De acordo com a Portaria 273/2013, de 20 de agosto, entende-se por uniforme o vestuário e abafo padronizado que caracteriza o pessoal de vigilância não vinculado a uma entidade de segurança privada.", correct: false },
+{ text: "De acordo com a Portaria 273/2013, de 20 de agosto, entende-se por uniforme o vestuário e calçado padronizado que caracteriza o pessoal da vigilância vinculado a uma entidade de segurança pública.", correct: false },
+{ text: "De acordo com a Portaria 273/2013, de 20 de agosto, entende-se por peça de fardamento qualquer artigo de uniforme ou artigo que no momento seja necessário.", correct: false },
+{ text: "A Portaria 273/2013, de 20 de agosto, é aplicável às entidades e profissões que exerçam a atividade de segurança privada.", correct: true },
+{ text: "A Portaria 273/2013, de 20 de agosto, é aplicável às empresas ou entidades industriais, comerciais ou de serviços que devam adotar medidas de segurança obrigatórias.", correct: true },
+{ text: "A Portaria 273/2013, de 20 de agosto, é aplicável às entidades e profissões que exerçam a atividade de segurança interna e pública.", correct: false },
+{ text: "O SIGESP é o Sistema Interno da Gestão de Segurança Privada.", correct: false },
+{ text: "O SIGESP é o Sistema Integrado de Gestão de Segurança Privada.", correct: true },
+{ text: "O SIGESP é o Sistema Integrado de Gestão de Segurança Pública.", correct: false },
+{ text: "O Sistema Integrado de Gestão de Segurança Privada deve permitir notificações automáticas para todas as entidades envolvidas, com alertas sobre prazos e sempre que novos elementos sejam adicionados ao processo.", correct: true },
+{ text: "O Sistema Integrado de Gestão de Segurança Privada deve incluir funcionalidades que permitam ao requerente preparar o preenchimento de formulários e a respetiva instrução.", correct: true },
+{ text: "O Sistema Integrado de Gestão de Segurança Privada deve incluir funcionalidades que permitam ao requerente verificar tudo que se passa com as entidades concorrentes.", correct: false },
+{ text: "A responsabilidade de manutenção do Sistema Integrado de Gestão de Segurança Privada é da Guarda Nacional Republicana.", correct: false },
+{ text: "A responsabilidade de manutenção do Sistema Integrado de Gestão de Segurança Privada é da Polícia de Segurança Pública.", correct: true },
+{ text: "A responsabilidade de manutenção do Sistema Integrado de Gestão de Segurança Privada é de todas as entidades de segurança privada.", correct: false },
+{ text: "A atualização de dados no Sistema Integrado de Gestão de Segurança Privada é da responsabilidade de todas as entidades de segurança pública.", correct: false },
+{ text: "A atualização de dados no Sistema Integrado de Gestão de Segurança Privada é da responsabilidade da Polícia de Segurança Privada.", correct: false },
+{ text: "As entidades que requeiram a emissão ou renovação de alvará devem possuir instalações operacionais adequadas ao exercício dos serviços de segurança privada requeridos ou autorizados.", correct: true },
+{ text: "As entidades que requeiram a emissão ou renovação de alvará devem utilizar a residência do gerente como instalação operacional, para o exercício dos serviços de segurança privada requeridos ou autorizados.", correct: false },
+{ text: "As entidades que requeiram a emissão ou renovação de alvará não necessitam de instalações operacionais.", correct: false },
+{ text: "As empresas de segurança privada que utilizem canídeos na prestação de serviços de segurança privada devem garantir que os mesmos são recolhidos em canil adequado ao número de animais.", correct: true },
+
         ]
     },
     BAS03C: {
         title: "BAS03 – Portaria n.º 292/2013, de 26 de setembro",
         questions: [
-            // 🔹 Coloque aqui as perguntas da BAS03 (Portaria 292)
+           { text: "Pela emissão, renovação ou substituição do cartão profissional do diretor de segurança e das especialidades de segurança privado é devida a taxa de 20 euros para pedido normal.", correct: true },
+{ text: "Pela emissão, renovação ou substituição do cartão profissional do diretor de segurança e das especialidades de segurança privado é devida a taxa de 40 euros para pedido normal.", correct: false },
+{ text: "Se o cartão profissional se tiver extraviado ou inutilizado, pelo pedido de emissão ou substituição é devida uma taxa de € 10, que acresce às taxas de emissão ou substituição do cartão profissional.", correct: true },
+{ text: "Se o cartão profissional se tiver extraviado ou inutilizado, pelo pedido de emissão ou substituição é devida uma taxa de € 40, que acresce às taxas de emissão ou substituição do cartão profissional.", correct: false },
+{ text: "Em caso de desistência do interessado ou indeferimento no processo de pedido de emissão, renovação ou substituição do cartão profissional são devolvidas as taxas pagas, deduzida da taxa de serviço.", correct: true },
+
         ]
     }
 };
